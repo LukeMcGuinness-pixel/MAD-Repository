@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>News for {{name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="hasNews">
+<ion-item>
+  <p>No news found for {{name}}.</p>
+</ion-item>
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf ="hasNews==false">
+  <ion-card *ngFor="let news of newsInfo">
+    <img alt="News Image" src="{{news.image_url}}" style="width:50%; height:auto;"/>
+    <ion-card-header>
+      <ion-card-title>{{news.title}}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      {{news.description}}
+    </ion-card-content>
+  </ion-card>
+  </ion-content>
+

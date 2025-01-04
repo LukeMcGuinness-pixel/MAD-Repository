@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      G00425732
+    </ion-title>
+    <ion-button [routerLink]="['/settings']" slot="end">Settings</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-input label="Enter Country" placeholder = "Country name" [(ngModel)]="keyword"></ion-input>
+<ion-item-divider>
+<ion-item>
+  <ion-button size="default" expand="full" (click)="openCountries()">Search</ion-button>
+</ion-item>
+</ion-item-divider>
+</ion-content>

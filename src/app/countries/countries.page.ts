@@ -43,6 +43,15 @@ export class CountriesPage implements OnInit {
     this.router.navigate(['/news']);
   }
 
+  async openWeather(latitude:any,longitude:any,name:string){
+    await this.ds.set('countryLatitude', latitude);
+    await this.ds.set('countryLongitude', longitude);
+    await this.ds.set('countryName', name);
+    console.log('Country lat saved: '+latitude);
+    console.log('Country long saved: '+longitude);
+    this.router.navigate(['/weather']);
+  }
+
   ngOnInit() {
     this.getKeyWord();
   }

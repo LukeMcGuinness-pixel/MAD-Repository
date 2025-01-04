@@ -78,8 +78,6 @@ export class NewsPage implements OnInit {
     this.getNews();
   }
 
-  //set up github, and upload code
-  //weather (L&L parameters and storage (same as name cca2 for news) units from storage.)
   //settings button if possible
   //extra functionality and innovation.pdf
   //refactor code

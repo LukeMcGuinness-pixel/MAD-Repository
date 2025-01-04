@@ -32,17 +32,14 @@ export class WeatherPage implements OnInit {
   }
 
   //code for get weather from openweathermap.org
-  urlWithLatitude:any;
-  urlWithLongitude:any;
-  urlWithUnits:any;
-  urlWithAPIKey:any;
   resultsWeather:any;
   weatherInfo:any;
   weatherDescription:string="";
   weatherIconCode:any;
   weatherIconLink:any;
 
-  weatherTemp:any;
+  weatherTemp:number=0;
+  weatherTempConverted:number=0;
   APIKey:string="452a51c92789b73436a0f22b8205e7fa";
   optionsWeather:HttpOptions={
     url: "https://api.openweathermap.org/data/2.5/weather?lat="
@@ -56,18 +53,32 @@ export class WeatherPage implements OnInit {
     this.optionsWeather.url = this.optionsWeather.url.concat("&units="+this.units);
     this.optionsWeather.url = this.optionsWeather.url.concat("&appid="+this.APIKey);
     
-    //console.log(JSON.stringify(this.optionsWeather.url));
+    console.log(JSON.stringify(this.optionsWeather.url));
 
     this.resultsWeather = await this.mhs.get(this.optionsWeather);
     //console.log(this.resultsWeather)
     this.weatherInfo = this.resultsWeather.data;
     this.weatherDescription = this.weatherInfo.weather[0].description;
+    console.log('Raw Temperature Before:', this.weatherTemp);
     this.weatherTemp = this.weatherInfo.main.temp;
+    console.log('Temperature After:', this.weatherTemp);
 
+    //console.log(this.weatherTemp)
+    //console.log('Units:', this.units);
+    //if(this.units=="metric"){
+      //this.weatherTempConverted = (this.weatherTemp-273.15);
+      //console.log("'"+this.units+"'");
+    //} else if(this.units=="imperial") {
+      //this.weatherTempConverted = ((this.weatherTemp-273.15)*(9/5))+32;
+      //console.log("'"+this.units+"'");
+    //} else {
+      //this.weatherTempConverted = this.weatherTemp;
+      //console.log("'"+this.units+"'");
+    //}
     
     this.weatherIconCode = this.weatherInfo.weather[0].icon;
-    this.weatherIconLink = "http://openweathermap.org/img/wn/"+this.weatherIconCode+"@2x.png");
-    console.log(this.weatherIconLink)
+    this.weatherIconLink = "http://openweathermap.org/img/wn/"+this.weatherIconCode+"@2x.png";
+    //console.log(this.weatherIconLink)
   }
 
   ngOnInit() {

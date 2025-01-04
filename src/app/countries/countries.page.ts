@@ -46,9 +46,9 @@ export class CountriesPage implements OnInit {
   async openWeather(latitude:any,longitude:any,name:string){
     await this.ds.set('countryLatitude', latitude);
     await this.ds.set('countryLongitude', longitude);
-    await this.ds.set('countryName', name);
-    console.log('Country lat saved: '+latitude);
-    console.log('Country long saved: '+longitude);
+    await this.ds.set('capitalName', name);
+    console.log('Capital Name: '+name);
+    //console.log('Country long saved: '+longitude);
     this.router.navigate(['/weather']);
   }
 

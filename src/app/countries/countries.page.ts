@@ -52,6 +52,13 @@ export class CountriesPage implements OnInit {
     this.router.navigate(['/weather']);
   }
 
+  async openMusic(name:string){
+    await this.ds.set('commonName', name);
+    console.log('Common Name: '+name);
+    //console.log('Country long saved: '+longitude);
+    this.router.navigate(['/music']);
+  }
+
   ngOnInit() {
     this.getKeyWord();
   }

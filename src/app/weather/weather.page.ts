@@ -14,9 +14,12 @@ import { HttpOptions } from '@capacitor/core';
 })
 export class WeatherPage implements OnInit {
 
+  //constructor imports DataService for Ionic storage retrieval
+  //constructor imports MyHttpService for using the OpenWeather API url
   constructor(private ds:DataService, private mhs:MyHttpService) { }
 
-  //code for getting name, latitude and longitude from restcountries.com
+  //getCountryInfo retrieves the country capital, temperature units, latitude and longitude from ionic storage
+  //These values are assigned to their respective variables
   capitalName:string="";
   units:string="";
   latitude:any;
@@ -26,12 +29,12 @@ export class WeatherPage implements OnInit {
     this.capitalName = await this.ds.get("capitalName");
     this.units = await this.ds.get("option");
     this.latitude = await this.ds.get("countryLatitude");
-    //console.log(this.latitude)
     this.longitude = await this.ds.get("countryLongitude");
-    //console.log(this.longitude)
   }
 
-  //code for get weather from openweathermap.org
+  //getWeather() constructs url by appending country latitude,longitude,units and API key
+  //sends a HTTP GET request to retrieve weather data in JSON format
+  //this is assigned to resultsWeather, and the data property of the HTTP Response is assigned to weatherInfo
   resultsWeather:any;
   weatherInfo:any;
   weatherDescription:string="";
@@ -46,39 +49,23 @@ export class WeatherPage implements OnInit {
   }
 
   async getWeather(){
+    //ensure the variables associated with getCountryInfo have been set
     await this.getCountryInfo();
 
     this.optionsWeather.url = this.optionsWeather.url.concat(this.latitude);
     this.optionsWeather.url = this.optionsWeather.url.concat("&lon="+this.longitude);
     this.optionsWeather.url = this.optionsWeather.url.concat("&units="+this.units);
     this.optionsWeather.url = this.optionsWeather.url.concat("&appid="+this.APIKey);
-    
-    console.log(JSON.stringify(this.optionsWeather.url));
 
     this.resultsWeather = await this.mhs.get(this.optionsWeather);
-    //console.log(this.resultsWeather)
     this.weatherInfo = this.resultsWeather.data;
+    //weather is an array, and description is retrieved from the first element of this array
     this.weatherDescription = this.weatherInfo.weather[0].description;
-    console.log('Raw Temperature Before:', this.weatherTemp);
     this.weatherTemp = this.weatherInfo.main.temp;
-    console.log('Temperature After:', this.weatherTemp);
-
-    //console.log(this.weatherTemp)
-    //console.log('Units:', this.units);
-    //if(this.units=="metric"){
-      //this.weatherTempConverted = (this.weatherTemp-273.15);
-      //console.log("'"+this.units+"'");
-    //} else if(this.units=="imperial") {
-      //this.weatherTempConverted = ((this.weatherTemp-273.15)*(9/5))+32;
-      //console.log("'"+this.units+"'");
-    //} else {
-      //this.weatherTempConverted = this.weatherTemp;
-      //console.log("'"+this.units+"'");
-    //}
     
+    //store the weather icon code from the first element of the weather array, and use it in the weather icon link
     this.weatherIconCode = this.weatherInfo.weather[0].icon;
     this.weatherIconLink = "http://openweathermap.org/img/wn/"+this.weatherIconCode+"@2x.png";
-    //console.log(this.weatherIconLink)
   }
 
   ngOnInit() {

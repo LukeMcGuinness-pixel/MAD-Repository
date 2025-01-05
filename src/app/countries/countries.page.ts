@@ -15,8 +15,14 @@ import { Router } from '@angular/router';
 })
 export class CountriesPage implements OnInit {
 
+  //constructor imports DataService for Ionic storage retrieval
+  //constructor imports Router to navigate to the other app pages
+  //constructor imports MyHttpService for using the RestCountries API url
   constructor(private ds:DataService, private mhs:MyHttpService, private router:Router) { }
 
+  //getKeyWord() constructs url by appending country search by the user from input
+  //sends a HTTP GET request to retrieve relevant country data
+  //this is assigned to result, and the the data property of the HTTP Response is assigned to countryInfo
   keyword:string="";
   options:HttpOptions={
     url: "https://restcountries.com/v3.1/name/"
@@ -29,33 +35,34 @@ export class CountriesPage implements OnInit {
     this.options.url = this.options.url.concat(this.keyword)
     let result = await this.mhs.get(this.options)
     this.countryInfo = result.data;
-    //console.log(JSON.stringify(this.countryInfo))
-    //this.countryName = this.countryInfo.name
-    //console.log(this.countryName)
-    //await this.ds.set("countryName",this.countryName)
   }
 
+  //openNews stores the country name and cca2 code for the selected country in ionic storage
+  //these are passed as parameters to the method
+  //and navigates to the news page
   async openNews(name:string,code:string){
+    //ensure name and code variables have been set prior to navigation
     await this.ds.set('countryName', name);
     await this.ds.set('countryCode', code);
-    console.log('Country name saved: '+name);
-    console.log('Country code saved: '+code);
     this.router.navigate(['/news']);
   }
 
+  //openWeather stores the country capital name,latitude and longitude for the selected country in ionic storage
+  //these are passed as parameters to the method
+  //and navigates to the weather page
   async openWeather(latitude:any,longitude:any,name:string){
+    //ensure relevant variables have been set prior to navigation
     await this.ds.set('countryLatitude', latitude);
     await this.ds.set('countryLongitude', longitude);
     await this.ds.set('capitalName', name);
-    console.log('Capital Name: '+name);
-    //console.log('Country long saved: '+longitude);
     this.router.navigate(['/weather']);
   }
 
+  //openMusic stores the country name for the selected country in ionic storage
+  //this is passed as a parameter to the method
+  //and navigates to the music page
   async openMusic(name:string){
     await this.ds.set('commonName', name);
-    console.log('Common Name: '+name);
-    //console.log('Country long saved: '+longitude);
     this.router.navigate(['/music']);
   }
 

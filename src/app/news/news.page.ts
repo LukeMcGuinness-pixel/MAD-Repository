@@ -15,32 +15,23 @@ import { HttpOptions } from '@capacitor/core';
 })
 export class NewsPage implements OnInit {
 
+  //constructor imports DataService for Ionic storage retrieval
+  //constructor imports MyHttpService for using the NewsData.io API url
   constructor(private ds:DataService, private mhs:MyHttpService) { }
 
-  //code for getting cca2 code from restcountries.com
-  keyword:string="";
+  //the getCode method retrieves the country name and cca2 code from ionic storage
+  //assigns these values in the name and code variables, respectively
   name:string="";
   code:string="";
-  options:HttpOptions={
-    url: "https://restcountries.com/v3.1/name/"
-  }
-  countryInfo:any;
 
   async getCode(){
     this.name = await this.ds.get("countryName");
     this.code = await this.ds.get("countryCode");
-    //this.options.url = this.options.url.concat(this.code)
-    //console.log(this.options.url)
-    //let result = await this.mhs.get(this.options)
-    //this.countryInfo = result.data;
-    //this.code = this.countryInfo.cca2;
-    //console.log(this.code)
   }
 
-
-
-
-//code for news from newsdata.io
+  //getNews() constructs url by appending API key aND country cca2 code
+  //sends a HTTP GET request to retrieve news data
+  //this is assigned to resultsNews, and the results part of the data property of the HTTP Response is assigned to newsInfo
 
   APIKey:string="pub_6404503dcdce26f5af1503ca95b2f0b612347";
   optionsNews:HttpOptions={
@@ -50,36 +41,38 @@ export class NewsPage implements OnInit {
   newsTitles:any=[]
   hasNews:boolean=false;
 
+  //No news method is used when there is no recent news for a selected country
+  //in the event of no news, the hasNews boolean variable is set to true
+  //if hasNews is true, the "No news found" message will be displayed to the user
   noNews(){
     this.hasNews=true;
   }
 
+  //getNews() constructs url by appending API key and country code
+  //sends a HTTP GET request to retrieve news data
+  //this is assigned to resultsNews, and the data property of the HTTP Response is assigned to NewsInfo
   async getNews(){
+    //ensure hasNews is set to false
     this.hasNews=false;
+    //ensure the getCode method executes prior to creating the url
     await this.getCode();
     let resultsNews:any;
+      //ensure code has been retrieved prior to creating the url
       if (this.code) {
-      this.optionsNews.url = this.optionsNews.url.concat(this.code)
-      resultsNews = await this.mhs.get(this.optionsNews)
-      //console.log(resultsNews.data.totalResults)
+      this.optionsNews.url = this.optionsNews.url.concat(this.code);
+      resultsNews = await this.mhs.get(this.optionsNews);
       this.newsInfo = resultsNews.data.results;
-      //console.log(this.newsInfo)
     }
+    //if no news is found, set hasNews to true using the noNews method
     if(resultsNews.data.totalResults==0){
       this.noNews();
-      //console.log(this.hasNews)
     } else { 
       this.newsInfo = resultsNews.data.results;
-      //console.log(this.newsInfo)
     }
   }
 
   ngOnInit() {
     this.getNews();
   }
-
-  //settings button if possible
-  //extra functionality and innovation.pdf
-  //refactor code
 
 }

@@ -13,6 +13,7 @@ import { DataService } from '../services/data.service';
 })
 export class SettingsPage implements OnInit {
 
+  //constructor imports DataService for Ionic storage retrieval
   constructor(private ds:DataService) { }
 
   async ngOnInit() {
@@ -20,7 +21,9 @@ export class SettingsPage implements OnInit {
     this.selectedOption = storedOption || "metric";
   }
 
+  //the default value of the key option is set to metric
   selectedOption:string="metric";
+  //changeOption sets the value of option to the selected option
   async changeOption(){
     await this.ds.set("option", this.selectedOption)
   }

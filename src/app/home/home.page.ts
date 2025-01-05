@@ -11,8 +11,11 @@ import { Router } from '@angular/router';
   imports: [IonIcon, RouterLink, FormsModule, IonButton, IonItem, IonItemDivider, IonInput, IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class HomePage {
+  //constructor imports DataService for Ionic storage retrieval
+  //constructor imports Router to navigate to the countries page
   constructor(private ds:DataService, private router:Router) {}
 
+  //use the DataService method set to set the value of keyword in ionic storage and open the countries page
   keyword:string="";
   async openCountries(){
     await this.ds.set("keyword",this.keyword)

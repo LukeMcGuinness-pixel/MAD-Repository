@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonIcon, IonButton, IonItem, IonItemDivider, IonInput, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonButton, IonItem, IonItemDivider, IonInput, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../services/data.service';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  imports: [IonIcon, RouterLink, FormsModule, IonButton, IonItem, IonItemDivider, IonInput, IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [RouterLink, FormsModule, IonButton, IonItem, IonItemDivider, IonInput, IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class HomePage {
   //constructor imports DataService for Ionic storage retrieval

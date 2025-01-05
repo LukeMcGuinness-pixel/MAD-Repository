@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonList, IonRadio, IonRadioGroup, IonItemDivider, IonButton, IonInput } from '@ionic/angular/standalone';
-//import { IonicStorageModule, Storage } from '@ionic/storage-angular';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonRadio, IonRadioGroup } from '@ionic/angular/standalone';
 import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   standalone: true,
-  imports: [IonInput, IonButton, IonItemDivider, IonRadioGroup, IonRadio, IonList, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonRadioGroup, IonRadio, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class SettingsPage implements OnInit {
 

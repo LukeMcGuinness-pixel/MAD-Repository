@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   selector: 'app-countries',
   templateUrl: './countries.page.html',
   standalone: true,
-  imports: [IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonCard, IonButton, IonImg, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonCardHeader, IonCardContent, IonCardTitle, IonCard, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class CountriesPage implements OnInit {
 
